@@ -1,9 +1,10 @@
-version: "3"
+version: "3.7"
 
 services:
-  sb-mirror:
+  sponsorblock:
     image: mchangrh/sb-mirror:latest
-    container_name: sb-mirror
+    container_name: sponsorblock
+    hostname: sponsorblock
     volumes:
       - ./mirror:/mirror
       - ./export:/export
@@ -11,33 +12,37 @@ services:
       - 873:873
     environment:
       - MIRROR=TRUE
-      - MIRROR_URL=sponsorblock.kavin.rocks
-    restart: unless-stopped
+      - MIRROR_URL=sponsorblock.whateveritworks.org
+    restart: always
+    
   postgres:
-    image: postgres:15-alpine
-    container_name: postgres-sb-mirror
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
     shm_size: 1g
     user: 0:0
     # ports:
     #   - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
       - ./mirror:/mirror
     environment:
       - POSTGRES_DB=sponsorblock
-      - POSTGRES_PASSWORD=password123
+      - POSTGRES_PASSWORD=changethis
       - POSTGRES_USER=sponsorblock
-    restart: unless-stopped
+    restart: always
+    
   sponsorblock-mirror:
     image: 1337kavin/sponsorblock-mirror:latest
     container_name: sponsorblock-mirror
+    hostname: sponsorblock-mirror
     volumes:
       - ./mirror:/app/mirror
     ports:
       - 8000:8000
-    restart: unless-stopped
+    restart: always
     depends_on:
       - postgres
-      - sb-mirror
+      - sponsorblock
 volumes:
   postgres_data: null
