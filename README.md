@@ -33,9 +33,7 @@ docker-compose up -d --build
 
 This starts the API server, a database, and a mirroring service to download the SponsorBlock data from the `sponsorblock.kavin.rocks` mirror and keep it up to date.
 
-The API will be available on `http://localhost:8000`. For example, you can try `http://localhost:8000/api/skipSegments/aabf` or `http://localhost:8000/api/skipSegments?videoID=eQ_8F4nzyiw`. **It will take a few minutes at least for the database to download and import,** so these will not return data on the first run.
-
-
+The API will be available on `http://localhost:8000`. For example, you can try `https://sponsorblock.whateveritworks.org/api/skipSegments/aabf` or `https://sponsorblock.whateveritworks.org/api/skipSegments?videoID=eQ_8F4nzyiw`. **It will take a few minutes at least for the database to download and import,** so these will not return data on the first run.
 
 ## Troubleshooting
 
